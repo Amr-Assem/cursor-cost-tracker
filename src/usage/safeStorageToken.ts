@@ -1,7 +1,7 @@
 import { execFile } from 'node:child_process'
 import { createDecipheriv, pbkdf2Sync } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { win32 } from 'node:path'
 
 /**
  * Cursor `cursorAuthTokenStorageCodec` seals `cursorAuth/accessToken` and
@@ -175,8 +175,8 @@ export async function readMacKeychainPassword(
 /** `%APPDATA%\Cursor\Local State`. `getStateDbPath` lives in `session.ts`; this stays beside the reader that consumes it. */
 export function getWindowsLocalStatePath(env: NodeJS.ProcessEnv): string {
   const appData =
-    env.APPDATA ?? (env.USERPROFILE ? join(env.USERPROFILE, 'AppData', 'Roaming') : '')
-  return join(appData, 'Cursor', 'Local State')
+    env.APPDATA ?? (env.USERPROFILE ? win32.join(env.USERPROFILE, 'AppData', 'Roaming') : '')
+  return win32.join(appData, 'Cursor', 'Local State')
 }
 
 function osCryptEncryptedKey(parsed: unknown): string | null {
